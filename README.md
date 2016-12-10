@@ -4,7 +4,7 @@
 ##Usage
 ###Building a form
 Create a new class that implements `\Tupas\Entity\BankInterface`.
-````
+````php
 <?php
 $bank = new YourBankClass();
 
@@ -35,6 +35,7 @@ Set form action to post to the Tupas service:
 ````
 <form method="..." action="$bank->getActionUrl();">
 ````
+
 ###Validating a returning customer
 ````php
 <?php
