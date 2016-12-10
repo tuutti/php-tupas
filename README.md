@@ -16,14 +16,14 @@ $form->setCancelUrl('http://example.com/tupas/cancel')
 ````
 Generate and store transaction id in a storage that persists over multiple requests, for example:
 
-````
+````php
 <?php
 $_SESSION['transaction_id'] = $form->getTransactionId();
 ````
 Note: This is not required, but *highly* recommended as otherwise the users can reuse their valid authentication urls as many times they want.
 
 Build your forms:
-````
+````php
 <?php
 foreach ($form->build() as $key => $value) {
     // Your form logic should generate a hidden input field:
@@ -36,7 +36,7 @@ Set form action to post to the Tupas service:
 <form method="..." action="$bank->getActionUrl();">
 ````
 ###Validating a returning customer
-````
+````php
 <?php
 ...
 // You should always use the bank number (three first 
@@ -62,7 +62,7 @@ catch (\Tupas\Exception\HashMatchException $e) {
 }
 ````
 Invalidate transaction id after a successful authentication:
-````
+````php
 <?php
 unset($_SESSION['transaction_id']);
 ````
