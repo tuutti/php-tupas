@@ -2,12 +2,25 @@
 [![Build Status](https://travis-ci.org/tuutti/php-tupas.svg?branch=master)](https://travis-ci.org/tuutti/tupas)
 
 ##Usage
-###Building a form
+###Building a tupas button/form
 Create a new class that implements `\Tupas\Entity\BankInterface`.
 ````php
 <?php
 $bank = new YourBankClass();
-
+// Populate required values.
+$bank->yourValueSetter([
+    'action_id' => 701,
+    'action_url' => 'https://auth.aktia.fi/tupastest',
+    'cert_version' => '0003',
+    'receiver_id' => '3333333333333',
+    'receiver_key' => '1234567890123456789012345678901234567890123456789012345678901234',
+    'id_type' => '02',
+    'bank_number' => 410,
+    'encryption_alg' => '03',
+    'key_version' => '0001',
+    ...
+]);
+...
 $form = new TupasForm($bank);
 $form->setCancelUrl('http://example.com/tupas/cancel')
     ->setRejectedUrl('http://example.com/tupas/rejected')
@@ -22,7 +35,7 @@ $_SESSION['transaction_id'] = $form->getTransactionId();
 ````
 Note: This is not required, but *highly* recommended as otherwise the users can reuse their valid authentication urls as many times they want.
 
-Build your forms:
+Build your form:
 ````php
 <?php
 foreach ($form->build() as $key => $value) {
@@ -31,7 +44,7 @@ foreach ($form->build() as $key => $value) {
 }
 ````
 
-Set form action to post to the Tupas service:
+Set form action:
 ````
 <form method="..." action="$bank->getActionUrl();">
 ````
@@ -40,14 +53,14 @@ Set form action to post to the Tupas service:
 ````php
 <?php
 ...
-// You should always use the bank number (three first 
+// You should always use the bank number (three first
 // characters of B02K_STAMP) to validate the bank.
 $bank_number = substr($_GET['B02K_STAMP'], 0, 3);
 $bank = $bank_storage->loadByBankNumber($bank_number);
 ...
 $tupas = new Tupas($bank, $_GET);
 
-// Compare transaction id stored in persistent storage against 
+// Compare transaction id stored in persistent storage against
 // the one returned by the Tupas service.
 if (!$tupas->isValidTransaction($_SESSION['transaction_id'])) {
     // Transaction id validation failed.
