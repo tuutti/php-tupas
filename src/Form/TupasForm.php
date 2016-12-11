@@ -87,7 +87,10 @@ class TupasForm implements TupasFormInterface
           'A01Y_KEYVERS' => $this->bank->getKeyVersion(),
           'A01Y_ALG' => $this->bank->getAlgorithm(),
         ];
-        return $values + ['A01Y_MAC' => $this->checksum($values, $this->bank->getAlgorithm())];
+        // Append receiver key.
+        $checksum = $values + [$this->bank->getReceiverKey()];
+
+        return $values + ['A01Y_MAC' => $this->checksum($checksum, $this->bank->getAlgorithm())];
     }
 
     /**
