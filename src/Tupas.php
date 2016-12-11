@@ -122,6 +122,6 @@ class Tupas
         }
         $timestamp = substr($value, -6);
 
-        return $transaction_id === $timestamp;
+        return $transaction_id == $timestamp;
     }
 }

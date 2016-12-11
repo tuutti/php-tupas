@@ -1,9 +1,20 @@
 #php-tupas
-[![Build Status](https://travis-ci.org/tuutti/php-tupas.svg?branch=master)](https://travis-ci.org/tuutti/tupas)
+[![Build Status](https://travis-ci.org/tuutti/php-tupas.svg?branch=master)](https://travis-ci.org/tuutti/php-tupas)
+
+##Install
+````
+composer require tuutti/php-tupas
+````
+
+##Testing
+````
+./vendor/bin/phpunit
+````
 
 ##Usage
-###Building a tupas button/form
+###Building tupas button/form
 Create a new class that implements `\Tupas\Entity\BankInterface`.
+
 ````php
 <?php
 $bank = new YourBankClass();
@@ -49,7 +60,7 @@ Set form action:
 <form method="..." action="$bank->getActionUrl();">
 ````
 
-###Validating a returning customer
+###Validating returning customer
 ````php
 <?php
 ...
@@ -80,5 +91,8 @@ Invalidate transaction id after a successful authentication:
 <?php
 unset($_SESSION['transaction_id']);
 ````
+
+##Examples
+https://github.com/tuutti/tupas
 
 

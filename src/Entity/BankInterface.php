@@ -10,7 +10,9 @@ namespace Tupas\Entity;
 interface BankInterface
 {
     /**
-     * Gets the action id.
+     * Gets the action id (A01Y_ACTION_ID).
+     *
+     * Example value: 701.
      *
      * @return int
      *   The action id.
@@ -19,6 +21,10 @@ interface BankInterface
 
     /**
      * Gets the action url.
+     *
+     * This is url to the Tupas service.
+     *
+     * Example: https://auth.aktia.fi/tupastest.
      *
      * @return string
      *   The url to Tupas service.
@@ -34,7 +40,9 @@ interface BankInterface
     public function getCertVersion();
 
     /**
-     * Gets the receiver id.
+     * Gets the receiver id (A01Y_RCVID).
+     *
+     * Example: 3333333333333.
      *
      * @return string
      *   The receiver id.
@@ -50,7 +58,9 @@ interface BankInterface
     public function getReceiverKey();
 
     /**
-     * Gets the id type.
+     * Gets the id type (A01Y_IDTYPE).
+     *
+     * Example: 02.
      *
      * @return string
      *   The id type.
@@ -58,7 +68,9 @@ interface BankInterface
     public function getIdType();
 
     /**
-     * Gets the key version.
+     * Gets the key version (A01Y_KEYVERS).
+     *
+     * Example: 0001.
      *
      * @return string
      *   The key version.
@@ -66,7 +78,9 @@ interface BankInterface
     public function getKeyVersion();
 
     /**
-     * Gets the used hashing algorithm.
+     * Gets the used hashing algorithm (A01Y_ALG).
+     *
+     * 01 = md5, 02 = sha1, 03 = sha256.
      *
      * @return string
      *   The algorithm.
@@ -75,6 +89,11 @@ interface BankInterface
 
     /**
      * Gets the bank number.
+     *
+     * This will be used to validate the bank when
+     * returning from the Tupas service.
+     *
+     * Example: 410 for Aktia.
      *
      * @return int
      *   The bank number.

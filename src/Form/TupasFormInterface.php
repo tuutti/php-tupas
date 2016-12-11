@@ -14,7 +14,7 @@ interface TupasFormInterface
     public function build();
 
     /**
-     * Sets the cancellation url.
+     * Sets the cancellation url (A01Y_CANLINK).
      *
      * @param string $url
      *   The url.
@@ -24,7 +24,7 @@ interface TupasFormInterface
     public function setCancelUrl($url);
 
     /**
-     * Gets the cancel url.
+     * Gets the cancel url (A01Y_CANLINK).
      *
      * @return string
      *   The absolute url to the cancel page.
@@ -32,7 +32,7 @@ interface TupasFormInterface
     public function getCancelUrl();
 
     /**
-     * Sets the rejected url.
+     * Sets the rejected url (A01Y_REJLINK).
      *
      * @param string $url
      *   The url.
@@ -42,7 +42,7 @@ interface TupasFormInterface
     public function setRejectedUrl($url);
 
     /**
-     * Gets the rejected url.
+     * Gets the rejected url (A01Y_REJLINK).
      *
      * @return string
      *   The absolute url to the rejected page.
@@ -50,7 +50,7 @@ interface TupasFormInterface
     public function getRejectedurl();
 
     /**
-     * Sets the return url.
+     * Sets the return url (A01Y_RETLINK).
      *
      * @param string $url
      *   The url.
@@ -60,7 +60,7 @@ interface TupasFormInterface
     public function setReturnUrl($url);
 
     /**
-     * Gets the return url.
+     * Gets the return url (A01Y_RETLINK).
      *
      * @return string
      *   The absolute url to the return page.
@@ -80,13 +80,21 @@ interface TupasFormInterface
     /**
      * Gets the transaction id.
      *
+     * This is used to make request unique and to validate
+     * returning customer.
+     *
+     * By default this is a random integer between 100000 and 999999.
+     *
      * @return int
      *   The transaction id.
      */
     public function getTransactionId();
 
     /**
-     * Generates an unique stamp based on transaction id.
+     * Generates an unique stamp based on transaction id (A01Y_STAMP).
+     *
+     * Date (yyyymmddhhiiss) + transaction id (6 digit int).
+     * For example: 20160612142352123456.
      *
      * @return string
      *   The unique stamp.
@@ -122,7 +130,7 @@ interface TupasFormInterface
     public function setLanguage($language);
 
     /**
-     * Gets the Tupas service language code.
+     * Gets the Tupas service language code (A01Y_LANGCODE).
      *
      * @return string
      *   The language code.
