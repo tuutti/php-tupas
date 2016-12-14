@@ -7,6 +7,9 @@ composer require tuutti/php-tupas
 ````
 
 ##Testing
+
+Run tests with phpunit.
+
 ````
 ./vendor/bin/phpunit
 ````
@@ -17,22 +20,15 @@ Create a new class that implements `\Tupas\Entity\BankInterface`.
 
 ````php
 <?php
-$bank = new YourBankClass();
-// Populate required values.
-$bank->yourValueSetter([
-    'action_id' => 701,
-    'action_url' => 'https://auth.aktia.fi/tupastest',
-    'cert_version' => '0003',
-    'receiver_id' => '3333333333333',
-    'receiver_key' => '1234567890123456789012345678901234567890123456789012345678901234',
-    'id_type' => '02',
-    'bank_number' => 410,
-    'encryption_alg' => '03',
-    'key_version' => '0001',
-    ...
-]);
+class YourBankClass implements \Tupas\Entity\BankInterface {
+    // Add required getters and populate required values.
+}
 ...
-$form = new TupasForm($bank);
+/** @var \Tupas\Entity\BankInterface $bank */
+$bank = new YourBankClass();
+...
+
+$form = new \Tupas\Form\TupasForm($bank);
 $form->setCancelUrl('http://example.com/tupas/cancel')
     ->setRejectedUrl('http://example.com/tupas/rejected')
     ->setReturnUrl('http://example.com/tupas/return')
@@ -44,7 +40,7 @@ Generate and store transaction id in a storage that persists over multiple reque
 <?php
 $_SESSION['transaction_id'] = $form->getTransactionId();
 ````
-Note: This is not required, but *highly* recommended as otherwise the users can reuse their valid authentication urls as many times they want.
+Note: This is not required, but *highly* recommended as otherwise users can reuse their valid authentication urls as many times they want.
 
 Build your form:
 ````php
@@ -66,12 +62,12 @@ Set form action:
 ...
 // You should always use the bank number (three first
 // characters of B02K_STAMP) to validate the bank.
+// Something like:
 $bank_number = substr($_GET['B02K_STAMP'], 0, 3);
-$bank = $bank_storage->loadByBankNumber($bank_number);
 ...
-$tupas = new Tupas($bank, $_GET);
 
-// Compare transaction id stored in persistent storage against
+$tupas = new \Tupas\Tupas($bank, $_GET);
+// Compare transaction id stored in a persistent storage against
 // the one returned by the Tupas service.
 if (!$tupas->isValidTransaction($_SESSION['transaction_id'])) {
     // Transaction id validation failed.
