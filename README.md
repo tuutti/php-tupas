@@ -79,7 +79,7 @@ catch (\Tupas\Exception\TupasGenericException $e) {
     // Validation failed due to missing parameters.
 }
 catch (\Tupas\Exception\HashMatchException $e) {
-    // Validated due to hash mismatch.
+    // Validation failed due to hash mismatch.
 }
 ````
 Invalidate transaction id after a successful authentication:
