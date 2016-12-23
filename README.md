@@ -1,5 +1,5 @@
 #php-tupas
-[![Build Status](https://travis-ci.org/tuutti/php-tupas.svg?branch=master)](https://travis-ci.org/tuutti/php-tupas)
+[![Build Status](https://travis-ci.org/tuutti/php-tupas.svg?branch=master)](https://travis-ci.org/tuutti/php-tupas) [![codecov](https://codecov.io/gh/tuutti/php-tupas/branch/master/graph/badge.svg)](https://codecov.io/gh/tuutti/php-tupas)
 
 ##Install
 ````
