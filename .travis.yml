@@ -16,6 +16,8 @@ install:
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
+  - ./vendor/bin/phpcs --colors --standard=PSR2 --extensions=php -n ./src &&
+  - ./vendor/bin/phpcs --colors --standard=PSR2 --extensions=php -n ./tests &&
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
