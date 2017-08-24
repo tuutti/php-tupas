@@ -67,12 +67,59 @@ abstract class BaseBank implements BankInterface
      */
     protected $algorithm;
 
+  /**
+   * The bank number.
+   *
+   * @var int
+   */
+    protected $bankNumber;
+
     /**
      * {@inheritdoc}
      */
     public function getActionId()
     {
         return $this->actionId;
+    }
+
+    public function getActionUrl()
+    {
+        return $this->actionUrl;
+    }
+
+    public function getCertVersion()
+    {
+        return $this->certVersion;
+    }
+
+    public function getReceiverId()
+    {
+        return $this->receiverId;
+    }
+
+    public function getReceiverKey()
+    {
+        return $this->receiverKey;
+    }
+
+    public function getIdType()
+    {
+        return $this->idType;
+    }
+
+    public function getKeyVersion()
+    {
+        return $this->keyVersion;
+    }
+
+    public function getAlgorithm()
+    {
+        return $this->algorithm;
+    }
+
+    public function getBankNumber()
+    {
+        return $this->bankNumber;
     }
 
     /**
