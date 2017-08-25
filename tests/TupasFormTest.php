@@ -33,6 +33,7 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
      * @covers ::getReturnUrl
      * @covers ::getCancelUrl
      * @covers ::getRejectedUrl
+     * @covers ::assertValidUrl
      * @covers ::setReturnUrl
      * @covers ::setCancelUrl
      * @covers ::setRejectedUrl
@@ -113,31 +114,6 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests language methods.
-     *
-     * @covers ::setLanguage
-     * @covers ::getLanguage
-     * @covers ::getLanguages
-     * @covers ::setLanguages
-     */
-    public function testLanguages()
-    {
-        $sut = new TupasForm($this->bank);
-        $this->assertEquals($sut->getLanguages(), ['EN', 'FI', 'SV']);
-
-        $sut->setLanguages(['en']);
-        $this->assertEquals($sut->getLanguages(), ['EN']);
-        $this->assertEquals($sut->getLanguage(), 'EN');
-
-        $sut->setLanguage('sv');
-        $this->assertEquals($sut->getLanguage(), 'EN');
-
-        $sut->setLanguages(['EN', 'FI']);
-        $sut->setLanguage('fi');
-        $this->assertEquals($sut->getLanguage(), 'FI');
-    }
-
-    /**
      * Tests stamp generation.
      *
      * @covers ::getStamp
@@ -149,5 +125,18 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
         $response = $sut->getStamp();
         $this->assertEquals(substr($response, 0, 14), (new \DateTime())->format('YmdHis'));
         $this->assertEquals(substr($response, -6), $sut->getTransactionId());
+    }
+
+    /**
+     * @covers ::assertValidUrl
+     *
+     * @depends testBuild
+     */
+    public function testAssertValidUrl()
+    {
+        $sut = new TupasForm($this->bank);
+        $url = 'foo bar';
+        $this->expectException(\InvalidArgumentException::class);
+        $sut->setCancelUrl($url);
     }
 }
