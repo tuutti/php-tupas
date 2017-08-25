@@ -102,24 +102,6 @@ interface TupasFormInterface
     public function getStamp();
 
     /**
-     * Sets array of allowed languages.
-     *
-     * @param array $languages
-     *   The allowed languages.
-     *
-     * @return $this
-     */
-    public function setLanguages(array $languages);
-
-    /**
-     * Gets array of allowed languages.
-     *
-     * @return array
-     *   The array of allowed languages.
-     */
-    public function getLanguages();
-
-    /**
      * Sets the language code.
      *
      * @param string $language

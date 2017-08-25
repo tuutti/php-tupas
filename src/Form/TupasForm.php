@@ -4,6 +4,7 @@ namespace Tupas\Form;
 
 use Tupas\Entity\BankInterface;
 use Tupas\TupasEncryptionTrait;
+use Webmozart\Assert\Assert;
 
 class TupasForm implements TupasFormInterface
 {
@@ -21,14 +22,14 @@ class TupasForm implements TupasFormInterface
      *
      * @var array
      */
-    protected $languages = ['EN', 'FI', 'SV'];
+    protected $allowedLanguages = ['EN', 'FI', 'SV'];
 
     /**
      * The current language.
      *
      * @var string
      */
-    protected $language = 'EN';
+    protected $language;
 
     /**
      * The cancel url.
@@ -64,9 +65,10 @@ class TupasForm implements TupasFormInterface
      * @param BankInterface $bank
      *   The bank.
      */
-    public function __construct(BankInterface $bank)
+    public function __construct(BankInterface $bank, $defaultLanguage = 'en')
     {
         $this->bank = $bank;
+        $this->setLanguage($defaultLanguage);
     }
 
     /**
@@ -94,10 +96,27 @@ class TupasForm implements TupasFormInterface
     }
 
     /**
+     * Asserts a valid URl.
+     *
+     * @param mixed $url
+     *   The URL
+     *
+     * @throws \InvalidArgumentException
+     *   Thrown if the value is not a valid URl.
+     */
+    private function assertValidUrl($url)
+    {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException(sprintf('"%s" is not a valid URL.', $url));
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setCancelUrl($url)
     {
+        $this->assertValidUrl($url);
         $this->cancelUrl = $url;
         return $this;
     }
@@ -107,6 +126,7 @@ class TupasForm implements TupasFormInterface
      */
     public function getCancelUrl()
     {
+        Assert::string($this->cancelUrl);
         return $this->cancelUrl;
     }
 
@@ -115,6 +135,7 @@ class TupasForm implements TupasFormInterface
      */
     public function setRejectedUrl($url)
     {
+        $this->assertValidUrl($url);
         $this->rejectedUrl = $url;
         return $this;
     }
@@ -124,6 +145,7 @@ class TupasForm implements TupasFormInterface
      */
     public function getRejectedUrl()
     {
+        Assert::string($this->rejectedUrl);
         return $this->rejectedUrl;
     }
 
@@ -132,6 +154,7 @@ class TupasForm implements TupasFormInterface
      */
     public function setReturnUrl($url)
     {
+        $this->assertValidUrl($url);
         $this->returnUrl = $url;
         return $this;
     }
@@ -141,6 +164,7 @@ class TupasForm implements TupasFormInterface
      */
     public function getReturnUrl()
     {
+        Assert::string($this->returnUrl);
         return $this->returnUrl;
     }
 
@@ -149,6 +173,7 @@ class TupasForm implements TupasFormInterface
      */
     public function setTransactionId($transaction_id)
     {
+        Assert::integer($transaction_id);
         $this->transactionId = $transaction_id;
         return $this;
     }
@@ -175,34 +200,9 @@ class TupasForm implements TupasFormInterface
     /**
      * {@inheritdoc}
      */
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setLanguages(array $languages)
-    {
-        $this->languages = array_map(function ($value) {
-            return strtoupper($value);
-        }, $languages);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguage()
     {
-        $language = strtoupper($this->language);
-
-        if (in_array($language, $this->getLanguages())) {
-            return $language;
-        }
-        return 'EN';
+        return $this->language ? $this->language : $this->defaultLanguage;
     }
 
     /**
@@ -210,6 +210,8 @@ class TupasForm implements TupasFormInterface
      */
     public function setLanguage($language)
     {
+        $language = strtoupper($language);
+        Assert::oneOf($language, $this->allowedLanguages);
         $this->language = $language;
         return $this;
     }
