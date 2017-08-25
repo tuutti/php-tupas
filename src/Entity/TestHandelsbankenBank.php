@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines the Nordea bank.
+ * Defines the test Handelsbanken bank.
  *
  * @package Tupas\Entity
  */
-final class NordeaBank extends BaseBank
+final class TestHandelsbankenBank extends BaseHandelsbankenBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class NordeaBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://tupas.nordea.fi/cgi-bin/SOLO3011';
+        parent::__construct();
         $this->certVersion = '0002';
-        $this->receiverId = '87654321';
-        $this->receiverKey = 'LEHTI';
+        $this->receiverId = '1111111111111';
+        $this->receiverKey = '11111111111111111111';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 200;
     }
 }

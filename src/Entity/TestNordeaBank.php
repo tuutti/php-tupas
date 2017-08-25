@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines the Ålandsbanken bank.
+ * Defines the test Nordea bank.
  *
  * @package Tupas\Entity
  */
-final class AlandsbankenBank extends BaseBank
+final class TestNordeaBank extends BaseNordeaBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class AlandsbankenBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://online.alandsbanken.fi/service/identify';
+        parent::__construct();
         $this->certVersion = '0002';
-        $this->receiverId = 'AABTUPASID';
-        $this->receiverKey = 'PAPAGAJA';
+        $this->receiverId = '87654321';
+        $this->receiverKey = 'LEHTI';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 600;
     }
 }

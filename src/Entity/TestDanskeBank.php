@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines Danske Bank.
+ * Defines the test Danske Bank.
  *
  * @package Tupas\Entity
  */
-final class DanskeBank extends BaseBank
+final class TestDanskeBank extends BaseDanskeBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class DanskeBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://verkkopankki.danskebank.fi/SP/tupaha/TupahaApp';
+        parent::__construct();
         $this->certVersion = '0003';
         $this->receiverId = '000000000000';
         $this->receiverKey = 'jumCLB4T2ceZWGJ9ztjuhn5FaeZnTm5HpfDXWU2APRqfDcsrBs8mqkFARzm7uXKd';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 800;
     }
 }

@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines Saastopankki.
+ * Defines the test Saastopankki bank.
  *
  * @package Tupas\Entity
  */
-final class SaastopankkiBank extends BaseBank
+final class TestSaastopankkiBank extends BaseSaastopankkiBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class SaastopankkiBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://tupas.saastopankki.fi';
+        parent::__construct();
         $this->certVersion = '0002';
         $this->receiverId = '1111111111111';
         $this->receiverKey = '11111111111111111111';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 420;
     }
 }

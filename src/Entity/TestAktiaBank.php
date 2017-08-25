@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines Osuuspankki.
+ * Defines the test Aktia bank.
  *
  * @package Tupas\Entity
  */
-final class OsuuspankkiBank extends BaseBank
+final class TestAktiaBank extends BaseAktiaBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class OsuuspankkiBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://kultaraha.op.fi/cgi-bin/krcgi';
+        parent::__construct();
         $this->certVersion = '0003';
-        $this->receiverId = 'Esittelymyyja';
-        $this->receiverKey = 'Esittelykauppiaansalainentunnus';
+        $this->receiverId = '3333333333333';
+        $this->receiverKey = '1234567890123456789012345678901234567890123456789012345678901234';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 500;
     }
 }

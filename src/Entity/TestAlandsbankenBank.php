@@ -3,11 +3,11 @@
 namespace Tupas\Entity;
 
 /**
- * Defines S-Pankki.
+ * Defines the test Ålandsbanken bank.
  *
  * @package Tupas\Entity
  */
-final class SPankkiBank extends BaseBank
+final class TestAlandsbankenBank extends BaseAlandsbankenBank
 {
 
   /**
@@ -15,13 +15,12 @@ final class SPankkiBank extends BaseBank
    */
     public function __construct()
     {
-        $this->actionUrl = 'https://online.s-pankki.fi/service/identify';
+        parent::__construct();
         $this->certVersion = '0002';
-        $this->receiverId = 'SPANKKITUPAS';
-        $this->receiverKey = 'SPANKKI';
+        $this->receiverId = 'AABTUPASID';
+        $this->receiverKey = 'PAPAGAJA';
         $this->idType = '02';
         $this->keyVersion = '0001';
         $this->algorithm = '03';
-        $this->bankNumber = 390;
     }
 }
