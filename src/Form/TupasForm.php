@@ -101,6 +101,8 @@ class TupasForm implements TupasFormInterface
      * @param mixed $url
      *   The URL
      *
+     * @return null
+     *
      * @throws \InvalidArgumentException
      *   Thrown if the value is not a valid URl.
      */
@@ -109,6 +111,7 @@ class TupasForm implements TupasFormInterface
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not a valid URL.', $url));
         }
+        return null;
     }
 
     /**

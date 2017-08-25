@@ -33,6 +33,7 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
      * @covers ::getReturnUrl
      * @covers ::getCancelUrl
      * @covers ::getRejectedUrl
+     * @covers ::assertValidUrl
      * @covers ::setReturnUrl
      * @covers ::setCancelUrl
      * @covers ::setRejectedUrl
@@ -124,5 +125,18 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
         $response = $sut->getStamp();
         $this->assertEquals(substr($response, 0, 14), (new \DateTime())->format('YmdHis'));
         $this->assertEquals(substr($response, -6), $sut->getTransactionId());
+    }
+
+    /**
+     * @covers ::assertValidUrl
+     *
+     * @depends testBuild
+     */
+    public function testAssertValidUrl()
+    {
+        $sut = new TupasForm($this->bank);
+        $url = 'foo bar';
+        $this->expectException(\InvalidArgumentException::class);
+        $sut->setCancelUrl($url);
     }
 }
