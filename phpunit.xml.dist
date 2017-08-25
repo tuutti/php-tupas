@@ -10,7 +10,7 @@
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
             <exclude>
-                <file>src/Entity/BaseBank.php</file>
+                <file>src/Entity/*Bank.php</file>
             </exclude>
         </whitelist>
     </filter>
