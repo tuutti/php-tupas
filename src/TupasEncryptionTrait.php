@@ -15,7 +15,7 @@ trait TupasEncryptionTrait
      * @return string
      *    Hashed MAC.
      */
-    public function hash($mac, $algorithm)
+    protected function hash($mac, $algorithm)
     {
         if ($algorithm === '01') {
             $mac = md5($mac);
@@ -38,7 +38,7 @@ trait TupasEncryptionTrait
      * @return string
      *   Hashed checksum.
      */
-    public function checksum(array $parts, $algorithm)
+    protected function checksum(array $parts, $algorithm)
     {
         return $this->hash(implode('&', $parts) . '&', $algorithm);
     }
