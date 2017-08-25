@@ -61,9 +61,9 @@ Set form action:
 <?php
 ...
 // You should always use the bank number (three first
-// characters of B02K_STAMP) to validate the bank.
+// characters of B02K_TIMESTMP) to validate the bank.
 // Something like:
-$bank_number = substr($_GET['B02K_STAMP'], 0, 3);
+$bank_number = substr($_GET['B02K_TIMESTMP'], 0, 3);
 ...
 
 $tupas = new \Tupas\Tupas($bank, $_GET);
