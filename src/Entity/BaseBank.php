@@ -121,38 +121,4 @@ abstract class BaseBank implements BankInterface
     {
         return $this->bankNumber;
     }
-
-    /**
-     * The setter.
-     *
-     * @param string $key
-     *   The name of property.
-     * @param mixed $value
-     *   The value for given property.
-     *
-     * @return $this
-     */
-    public function set($key, $value)
-    {
-        if (!property_exists($this, $key)) {
-            throw new \LogicException(sprintf('%s does not exist.', $key));
-        }
-        $this->{$key} = $value;
-
-        return $this;
-    }
-
-    /**
-     * The getter.
-     *
-     * @param string $key
-     *   The name of property to get.
-     *
-     * @return mixed|null
-     *   The value if found, null if not.
-     */
-    public function get($key)
-    {
-        return property_exists($this, $key) ? $this->{$key} : null;
-    }
 }
