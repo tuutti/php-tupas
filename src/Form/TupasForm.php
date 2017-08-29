@@ -71,12 +71,15 @@ class TupasForm implements TupasFormInterface
      *
      * @param BankInterface $bank
      *   The bank.
+     * @param string $defaultLanguage
+     *   The ISO-639 1 code of the default user interface language.
      * @param \DateTime $dateTime
      *   The transaction date-time or NULL to use the current date-time.
      */
-    public function __construct(BankInterface $bank, \DateTime $dateTime = null)
+    public function __construct(BankInterface $bank, $defaultLanguage = 'en', \DateTime $dateTime = null)
     {
         $this->bank = $bank;
+        $this->setLanguage($defaultLanguage);
         $this->dateTime = $dateTime ?: new \DateTime();
     }
 
