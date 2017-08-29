@@ -206,7 +206,7 @@ class TupasForm implements TupasFormInterface
      */
     public function getStamp()
     {
-        return sprintf('%s%s', ($this->dateTime)->format('YmdHis'), $this->getTransactionId());
+        return sprintf('%s%s', $this->dateTime->format('YmdHis'), $this->getTransactionId());
     }
 
     /**
