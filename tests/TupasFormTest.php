@@ -117,13 +117,30 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
      * Tests stamp generation.
      *
      * @covers ::getStamp
-     * @covers ::getTransactionId
+     *
+     * @depends testTransaction
      */
-    public function testGetStamp()
+    public function testGetStampWithDefinedDateTimeAndTransactionId()
+    {
+        $dateTime = (new \DateTime())->setTimestamp(0);
+        $transactionId = 314159;
+        $sut = new TupasForm($this->bank, 'en', $dateTime);
+        $sut->setTransactionId($transactionId);
+        $stamp = $sut->getStamp();
+        $this->assertSame('19700101000000314159', $stamp);
+    }
+
+    /**
+     * Tests stamp generation.
+     *
+     * @covers ::getStamp
+     *
+     * @depends testTransaction
+     */
+    public function testGetStampWithUndefinedDateTimeAndTransactionId()
     {
         $sut = new TupasForm($this->bank);
         $response = $sut->getStamp();
-        $this->assertEquals(substr($response, 0, 14), (new \DateTime())->format('YmdHis'));
         $this->assertEquals(substr($response, -6), $sut->getTransactionId());
     }
 

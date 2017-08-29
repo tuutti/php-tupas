@@ -11,6 +11,13 @@ class TupasForm implements TupasFormInterface
     use TupasEncryptionTrait;
 
     /**
+     * The transaction date-time.
+     *
+     * @var \DateTime
+     */
+    protected $dateTime;
+
+    /**
      * The transaction id.
      *
      * @var string
@@ -60,15 +67,20 @@ class TupasForm implements TupasFormInterface
     protected $bank;
 
     /**
-     * TupasForm constructor.
+     * Constructs a new instance.
      *
      * @param BankInterface $bank
      *   The bank.
+     * @param string $defaultLanguage
+     *   The ISO-639 1 code of the default user interface language.
+     * @param \DateTime $dateTime
+     *   The transaction date-time or NULL to use the current date-time.
      */
-    public function __construct(BankInterface $bank, $defaultLanguage = 'en')
+    public function __construct(BankInterface $bank, $defaultLanguage = 'en', \DateTime $dateTime = null)
     {
         $this->bank = $bank;
         $this->setLanguage($defaultLanguage);
+        $this->dateTime = $dateTime ?: new \DateTime();
     }
 
     /**
@@ -197,7 +209,7 @@ class TupasForm implements TupasFormInterface
      */
     public function getStamp()
     {
-        return sprintf('%s%s', (new \DateTime())->format('YmdHis'), $this->getTransactionId());
+        return sprintf('%s%s', $this->dateTime->format('YmdHis'), $this->getTransactionId());
     }
 
     /**
