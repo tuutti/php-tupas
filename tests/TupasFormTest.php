@@ -123,11 +123,11 @@ class TupasFormTest extends \PHPUnit_Framework_TestCase
     public function testGetStampWithDefinedDateTimeAndTransactionId()
     {
         $dateTime = (new \DateTime())->setTimestamp(0);
-        $transactionId = 314159;
+        $transactionId = 314;
         $sut = new TupasForm($this->bank, 'en', $dateTime);
         $sut->setTransactionId($transactionId);
         $stamp = $sut->getStamp();
-        $this->assertSame('19700101000000314159', $stamp);
+        $this->assertSame('19700101000000000314', $stamp);
     }
 
     /**
