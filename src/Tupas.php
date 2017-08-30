@@ -108,20 +108,24 @@ class Tupas
     /**
      * Validates transaction id.
      *
-     * @param int $transaction_id
+     * @param int $referenceTransactionId
      *   The transaction id.
      *
      * @return bool
      *   True if valid, false if not valid.
      */
-    public function isValidTransaction($transaction_id)
+    public function isValidTransaction($referenceTransactionId)
     {
-        // Stamp cannot be empty.
-        if (!$value = $this->get('B02K_STAMP')) {
+        if (!is_int($referenceTransactionId) or $referenceTransactionId < 0 or $referenceTransactionId > 999999) {
             return false;
         }
-        $timestamp = substr($value, -6);
-
-        return $transaction_id == $timestamp;
+        // Stamp cannot be empty.
+        if (!$stamp = $this->get('B02K_STAMP')) {
+            return false;
+        }
+        $receivedTransActionId = substr($stamp, -6);
+        $referenceTransactionId = (string)$referenceTransactionId;
+        $referenceTransactionId = str_repeat('0', 6 - strlen($referenceTransactionId)) . $referenceTransactionId;
+        return $referenceTransactionId === $receivedTransActionId;
     }
 }

@@ -146,7 +146,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                '123456',
+                123456,
                 '01',
             ],
             [
@@ -162,7 +162,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                '123456',
+                123456,
                 '02',
             ],
             [
@@ -178,7 +178,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                '123456',
+                123456,
                 '03',
             ],
             [
@@ -196,9 +196,25 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_USRID' => 123,
                     'B02K_USERNAME' => 'username',
                 ],
-                '123456',
+                123456,
                 '03',
             ],
+        ];
+    }
+
+    /**
+     * Provides data to self::testIsValidTransaction().
+     */
+    public function provideIsValidTransaction()
+    {
+        return [
+            // Transaction IDs must be integers.
+            [true, '20161212232323123456', 123456],
+            [true, '20161212232323000456', 456],
+            // Transaction IDs must be identical, as loose comparisons can cause security breaches. For PHP 5 support,
+            // test with non-integers.
+            [false, '20161212232323000456', '456'],
+            [false, '20161212232323000456', 456.0],
         ];
     }
 
@@ -207,13 +223,23 @@ class TupasTest extends \PHPUnit_Framework_TestCase
      *
      * @covers ::isValidTransaction
      * @covers ::get
+     *
+     * @dataProvider provideIsValidTransaction
      */
-    public function testIsValidTransaction()
+    public function testIsValidTransaction($expected, $stamp, $reference_transaction_id)
+    {
+        $sut = new Tupas($this->bank, ['B02K_STAMP' => $stamp]);
+        $this->assertSame($expected, $sut->isValidTransaction($reference_transaction_id), sprintf('With B02K_STAMP %s and reference transaction ID %s.', var_export($stamp, true), var_export($reference_transaction_id, true)));
+    }
+
+    /**
+     * Tests isValidTransaction() method.
+     *
+     * @covers ::isValidTransaction
+     */
+    public function testIsValidTransactionShouldFailWithoutStamp()
     {
         $sut = new Tupas($this->bank, []);
-        $this->assertFalse($sut->isValidTransaction('123456'));
-        $sut = new Tupas($this->bank, ['B02K_STAMP' => '20161212232323123456']);
-        $this->assertTrue($sut->isValidTransaction('123456'));
-        $this->assertFalse($sut->isValidTransaction('1234567'));
+        $this->assertFalse($sut->isValidTransaction(123456));
     }
 }
