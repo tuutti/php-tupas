@@ -211,11 +211,10 @@ class TupasTest extends \PHPUnit_Framework_TestCase
             // Transaction IDs must be integers.
             [true, '20161212232323123456', 123456],
             [true, '20161212232323000456', 456],
-            // Transaction IDs must be identical, as loose comparisons can cause security breaches.
-            [false, 0, '0'],
-            [false, 0, false],
-            [false, 0, null],
-            [false, 0, '0x'],
+            // Transaction IDs must be identical, as loose comparisons can cause security breaches. For PHP 5 support,
+            // test with non-integers.
+            [false, '20161212232323000456', '456'],
+            [false, '20161212232323000456', 456.0],
         ];
     }
 
