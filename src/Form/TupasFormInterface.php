@@ -68,25 +68,25 @@ interface TupasFormInterface
     public function getReturnUrl();
 
     /**
-     * Sets the transaction id.
+     * Sets the transaction ID.
      *
-     * @param int $transaction_id
-     *   The transaction id.
+     * @param string $transactionId
+     *   The transaction ID.
      *
      * @return $this
      */
-    public function setTransactionId($transaction_id);
+    public function setTransactionId($transactionId);
 
     /**
-     * Gets the transaction id.
+     * Gets the transaction ID.
      *
      * This is used to make request unique and to validate
      * returning customer.
      *
-     * By default this is a random integer between 100000 and 999999.
+     * By default this is a random zero-padded number between 0 and 999999.
      *
-     * @return int
-     *   The transaction id.
+     * @return string
+     *   The transaction ID.
      */
     public function getTransactionId();
 

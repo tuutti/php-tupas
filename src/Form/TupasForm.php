@@ -186,10 +186,11 @@ class TupasForm implements TupasFormInterface
     /**
      * {@inheritdoc}
      */
-    public function setTransactionId($transaction_id)
+    public function setTransactionId($transactionId)
     {
-        Assert::integer($transaction_id);
-        $this->transactionId = $transaction_id;
+        Assert::string($transactionId);
+        Assert::length($transactionId, 6);
+        $this->transactionId = $transactionId;
         return $this;
     }
 
@@ -199,7 +200,9 @@ class TupasForm implements TupasFormInterface
     public function getTransactionId()
     {
         if (!$this->transactionId) {
-            $this->transactionId = random_int(100000, 999999);
+            $transactionId = (string)random_int(0, 999999);
+            $transactionId = str_repeat('0', 6 - strlen($transactionId)) . $transactionId;
+            $this->setTransactionId($transactionId);
         }
         return $this->transactionId;
     }

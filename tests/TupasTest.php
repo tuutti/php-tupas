@@ -146,7 +146,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                123456,
+                '123456',
                 '01',
             ],
             [
@@ -162,7 +162,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                123456,
+                '123456',
                 '02',
             ],
             [
@@ -178,7 +178,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_CUSTID' => 123,
                     'B02K_CUSTTYPE' => 123,
                 ],
-                123456,
+                '123456',
                 '03',
             ],
             [
@@ -196,7 +196,7 @@ class TupasTest extends \PHPUnit_Framework_TestCase
                     'B02K_USRID' => 123,
                     'B02K_USERNAME' => 'username',
                 ],
-                123456,
+                '123456',
                 '03',
             ],
         ];
@@ -208,13 +208,8 @@ class TupasTest extends \PHPUnit_Framework_TestCase
     public function provideIsValidTransaction()
     {
         return [
-            // Transaction IDs must be integers.
-            [true, '20161212232323123456', 123456],
-            [true, '20161212232323000456', 456],
-            // Transaction IDs must be identical, as loose comparisons can cause security breaches. For PHP 5 support,
-            // test with non-integers.
-            [false, '20161212232323000456', '456'],
-            [false, '20161212232323000456', 456.0],
+            [true, '20161212232323123456', '123456'],
+            [false, '20161212232323123456', '314159'],
         ];
     }
 
@@ -240,6 +235,6 @@ class TupasTest extends \PHPUnit_Framework_TestCase
     public function testIsValidTransactionShouldFailWithoutStamp()
     {
         $sut = new Tupas($this->bank, []);
-        $this->assertFalse($sut->isValidTransaction(123456));
+        $this->assertFalse($sut->isValidTransaction('123456'));
     }
 }
