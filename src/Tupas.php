@@ -5,6 +5,7 @@ namespace Tupas;
 use Tupas\Entity\BankInterface;
 use Tupas\Exception\HashMatchException;
 use Tupas\Exception\TupasGenericException;
+use Webmozart\Assert\Assert;
 
 /**
  * Class Tupas.
@@ -108,7 +109,7 @@ class Tupas
     /**
      * Validates transaction id.
      *
-     * @param int $referenceTransactionId
+     * @param string $referenceTransactionId
      *   The transaction id.
      *
      * @return bool
@@ -116,16 +117,15 @@ class Tupas
      */
     public function isValidTransaction($referenceTransactionId)
     {
-        if (!is_int($referenceTransactionId) or $referenceTransactionId < 0 or $referenceTransactionId > 999999) {
-            return false;
-        }
+        Assert::string($referenceTransactionId);
+        Assert::length($referenceTransactionId, 6);
+
         // Stamp cannot be empty.
         if (!$stamp = $this->get('B02K_STAMP')) {
             return false;
         }
-        $receivedTransActionId = substr($stamp, -6);
-        $referenceTransactionId = (string)$referenceTransactionId;
-        $referenceTransactionId = str_repeat('0', 6 - strlen($referenceTransactionId)) . $referenceTransactionId;
-        return $referenceTransactionId === $receivedTransActionId;
+
+        $receivedTransactionId = substr($stamp, -6);
+        return $referenceTransactionId === $receivedTransactionId;
     }
 }
